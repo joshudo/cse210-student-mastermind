@@ -20,8 +20,9 @@ class Director:
             self._board = Board()
             self._console = Console()
             self._keep_playing = True
-            self._move = None
+            self._move = 0
             self._roster = Roster()
+           
 
     def start_game(self):
         self._prepare_game()
@@ -52,12 +53,18 @@ class Director:
         # display the game board
         # get next player's move
         player = self._roster.get_current()
+        both_players = self._roster.players
+        self._console.write("--------------------")
+        self._console.write(f"Player {both_players[0].get_name()}: {both_players[0].get_move()}, {both_players[0].get_result()} ")
+        self._console.write(f"Player {both_players[1].get_name()}: {both_players[1].get_move()}, {both_players[1].get_result()} ")
+        self._console.write("--------------------")
         self._console.write(f"{player.get_name()}'s turn:")
         guess = self._console.read_number("What is your guess? ")
         move = Move(guess)
         player.set_move(move)
         self._board.apply(move)
-        board = self._board.to_string()
+        player.set_result(self._board.code)
+        board = player.get_result()
         self._console.write(board)
 
     def _do_updates(self):
@@ -77,10 +84,11 @@ class Director:
         Args:
             self (Director): An instance of Director.
         """
-        if self._move == self._board.code:
+        if self._move == int(self._board.code):
             winner = self._roster.get_current()
             name = winner.get_name()
             print(f"\n{name} won!")
+
 
             self._keep_playing = False
         self._roster.next_player()

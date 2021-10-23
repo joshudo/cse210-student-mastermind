@@ -6,7 +6,7 @@ class Board:
 
    def __init__(self):
         self.code = ""
-        self._prepare
+        self._prepare()
         self.guess = 0
       
 
@@ -25,7 +25,6 @@ class Board:
             text += ("*")
       return(text)
 
-         
 
 
 
