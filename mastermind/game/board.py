@@ -1,4 +1,6 @@
+from game.player import Player
 import random 
+
 
 class Board:
 
